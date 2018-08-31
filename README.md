@@ -1,27 +1,56 @@
 # HISFrontendAngular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
+Actividad didáctica consistente en la creación de un frontend con angular simulando una app de gestión hospitalaria
 
-## Development server
+## Objetivos
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- Creación de una arquitectura avanzada de frontend MVC 
+- Gestión de usuarios con distintos roles
+- Uso avanzado de servicios siguiendo el principio de responsabilidad única.
+- Centralizar el estado de la app en un servicio central (llamado por ejemplo stateManagerService o dataService ) del cuál se nutren todos los componentes y servicios
+- Creación de vistas publicas y privadas gestionadas por el router del frontend haciendo uso del evento canActivate de la configuración del router
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Roles
 
-## Build
+- Doctor 
+- Patient
+- Technical
+- Admin (permiso root: puede hacer todo)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+## Api
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Simular la interacción con un backend mediante un servicio fake (mock) 
 
-## Running end-to-end tests
+- login()
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+- getPatients()   // doctor, admin
+- getPatient(uid) //  doctor, admin, patient
+- postPatient(patient) // technical
 
-## Further help
+- getMedicalHistories() // doctor, admin
+- getMedicalHistory(id)  // doctor, admin, patient
+- postMedicalHistory(medicalHistory) // doctor
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+- postDoctor(doctor)  // technical
+- postPatient(patient) // technical
+- postTechnical(technical) // technical
+
+### Vistas
+
+- Públicas
+    - /login
+- Privadas todos
+    - /dashboard (distribuidor da acceso al resto de vistas privadas según el role )
+- Privadas doctor
+    - /patients
+    - /patient/:id
+    - /histories
+    - /history/:id
+- Privadas technical
+    - /newUser/:role (role === 'admin' || role === 'doctor' || role === 'technical' )
+- Privadas patient
+    - /patient/:id  sólo puede ver su ficha
+    - /history/:id  sólo puede ver su historial
+
