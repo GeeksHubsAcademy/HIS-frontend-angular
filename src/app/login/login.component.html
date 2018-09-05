@@ -1,0 +1,12 @@
+<form (submit)="login($event)" >
+    <input type="text"
+           name="user"
+           [(ngModel)]="user">
+    <br>
+    <input type="password"
+           name="password"
+           [(ngModel)]="password">
+    <br>
+    <button type="submit">Entrar</button>
+    <div *ngIf="error">{{error}}</div>
+</form>
